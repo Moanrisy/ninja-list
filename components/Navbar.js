@@ -4,7 +4,7 @@ import { useContext } from "react";
 import AuthContext from "../stores/authContext";
 
 const Navbar = () => {
-  const { user, login } = useContext(AuthContext);
+  const { user, login, logout } = useContext(AuthContext);
   return (
     <nav>
       <div className="logo">
@@ -16,14 +16,20 @@ const Navbar = () => {
       <Link href="/about">
         <a>About</a>
       </Link>
-      <Link href="/">
-        <a onClick={login} className="button">
-          Login/Signup
-        </a>
-      </Link>
       <Link href="/ninjas">
         <a>Ninja Listing</a>
       </Link>
+      {!user && (
+        <a onClick={login} className="button">
+          Login/Signup
+        </a>
+      )}
+      {user && <a>{user.email}</a>}
+      {user && (
+        <button onClick={logout} className="button">
+          Logout
+        </button>
+      )}
     </nav>
   );
 };
